@@ -2,38 +2,31 @@ package com.example.splashlogin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Button;
 
 
 public class login extends AppCompatActivity {
+    private Button buttonLogin;
 
-    LinearLayout rellay1;
-    LinearLayout rellay2;
-    LinearLayout rellay3;
-    Handler handler = new Handler();
-    Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            rellay1.setVisibility(View.VISIBLE);
-            rellay2.setVisibility(View.VISIBLE);
-            rellay3.setVisibility(View.VISIBLE);
-
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        rellay1 = (LinearLayout) findViewById(R.id.rellay1);
-        rellay2 = (LinearLayout) findViewById(R.id.rellay2);
-        rellay3 = (LinearLayout) findViewById(R.id.rellay3);
+        buttonLogin = findViewById(R.id.buttonLogin);
 
-        handler.postDelayed(runnable, 5000);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View v){
+                // action
+                Intent intent = new Intent(login.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }
