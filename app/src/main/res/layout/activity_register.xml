@@ -49,7 +49,7 @@
         android:height="30dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="exp@email.domain"
+        android:hint="email"
         android:inputType="textEmailSubject"
         android:paddingLeft="10dp"
         android:textColor="#FFFFFF"
