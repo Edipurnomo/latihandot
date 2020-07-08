@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">splashlogin</string>
+    <string-array name="daftar_makanan">
+        <item>Select Roles</item>
+        <item>User</item>
+        <item>Admin</item>
+    </string-array>
 </resources>

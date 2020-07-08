@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
-    android:background="@color/Black"
+    android:background="#FFFFFF"
     >
 
     <ImageView
@@ -14,6 +14,6 @@
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:src="@mipmap/ed"
-        android:background="@color/Aqua"/>
+        android:background="#FFFFFF"/>
 
 </RelativeLayout>
