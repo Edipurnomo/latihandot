@@ -28,7 +28,7 @@
         app:layout_constraintVertical_bias="0.457" />
 
     <EditText
-        android:id="@+id/editTextTextPassword4"
+        android:id="@+id/email"
         android:layout_width="329dp"
         android:layout_height="42dp"
         android:height="30dp"
@@ -46,7 +46,7 @@
         app:layout_constraintVertical_bias="0.455" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/username"
         android:layout_width="329dp"
         android:layout_height="42dp"
         android:width="216dp"
@@ -79,13 +79,13 @@
         tools:ignore="MissingConstraints" />
 
     <EditText
-        android:id="@+id/editTextTextPassword3"
+        android:id="@+id/password"
         android:layout_width="329dp"
         android:layout_height="42dp"
         android:height="30dp"
         android:background="@drawable/border"
         android:ems="10"
-        android:hint="Pasword"
+        android:hint="Password"
         android:inputType="textPassword"
         android:paddingLeft="10dp"
         android:textColor="#FFFFFF"
@@ -96,7 +96,7 @@
         app:layout_constraintVertical_bias="0.345" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName4"
+        android:id="@+id/fullname"
         android:layout_width="329dp"
         android:layout_height="42dp"
         android:width="216dp"
@@ -155,13 +155,13 @@
         app:layout_constraintVertical_bias="0.783">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/ButtonReg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="True" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/Button_Reg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="False" />
