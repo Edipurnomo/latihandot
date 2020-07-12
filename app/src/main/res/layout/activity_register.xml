@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#B1F38E"
     android:hapticFeedbackEnabled="true"
-    tools:context=".NewReg">
+    tools:context=".Registration">
 
     <TextView
         android:id="@+id/textView2"
@@ -96,7 +96,7 @@
         app:layout_constraintVertical_bias="0.345" />
 
     <EditText
-        android:id="@+id/fullname"
+        android:id="@+id/name"
         android:layout_width="329dp"
         android:layout_height="42dp"
         android:width="216dp"
@@ -115,10 +115,10 @@
         app:layout_constraintVertical_bias="0.557" />
 
     <TextView
-        android:id="@+id/textView13"
+        android:id="@+id/Roles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Roles"
+        android:text="Roles"
         android:textColor="#221F1F"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -155,20 +155,20 @@
         app:layout_constraintVertical_bias="0.783">
 
         <RadioButton
-            android:id="@+id/ButtonReg"
+            android:id="@+id/ButtonAktif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="True" />
 
         <RadioButton
-            android:id="@+id/Button_Reg"
+            android:id="@+id/Button_Nonaktif"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="False" />
     </RadioGroup>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register Account"
