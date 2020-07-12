@@ -27,11 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -95,7 +91,7 @@ public class HomeFragment extends Fragment {
             bookAdapter.setId(books.getId());
             bookAdapter.setJudul(books.getJudul());
             bookAdapter.setPenulis(books.getPenulis());
-            bookAdapter.setThumb(R.drawable.laiki);
+            bookAdapter.setThumb(books.getThumb());
             bookAdapterList.add(bookAdapter);
         }
         memberListAdapter.addAll(bookAdapterList);
