@@ -202,15 +202,15 @@
 
         <Button
             android:id="@+id/send"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Send Book"
             android:theme="@style/buttonstyle3"
-            android:layout_marginTop="450dp"
-            android:layout_marginLeft="250dp"
+            android:layout_marginTop="410dp"
+            android:layout_marginLeft="220dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.200"
+            app:layout_constraintHorizontal_bias="0.600"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title2"
             app:layout_constraintVertical_bias="0.515" />

@@ -10,37 +10,30 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 public class BookActivity extends AppCompatActivity {
- EditText judulbuku, penulis, penerbit, tahun, harga;
+
     Button home;
     Button plus;
-    Button addimage;
-    Button send;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
-        judulbuku = findViewById(R.id.judul);
-        penulis = findViewById(R.id.penulis);
-        penerbit = findViewById(R.id.penerbit);
-        tahun = findViewById(R.id.tahun);
-        harga = findViewById(R.id.harga);
+
         home = findViewById(R.id.home);
         plus = findViewById(R.id.plus);
-        addimage = findViewById(R.id.addimage);
-        send = findViewById(R.id.send);
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tambahFragment();
 
+                openHomeFragment();
             }
         });
         plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                tambahFragment();
 
-                openHomeFragment();
             }
         });
 
