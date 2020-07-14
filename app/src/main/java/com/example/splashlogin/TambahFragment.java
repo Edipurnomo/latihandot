@@ -23,6 +23,7 @@ import com.example.splashlogin.API.BookApiService;
 import com.example.splashlogin.model.Book;
 import com.example.splashlogin.model.LoginResult;
 import com.example.splashlogin.rest.AppService;
+import com.example.splashlogin.rest.RetrofitUtility;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -44,12 +45,11 @@ public class TambahFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static final int PICK_IMAGE = 1;
-    private String base64Image = "";
     private View view;
     private String TAG = "TambahFragment";
     private EditText judulbuku, penulis, penerbit, tahun, harga;
     private ImageView imageView;
-    private String bas64Image;
+    private String base64Image;
     private Retrofit retrofit;
     Button addimage;
     Button send;
@@ -66,21 +66,42 @@ public class TambahFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        initRetrofit();
         view = inflater.inflate(R.layout.fragment_tambah, container, false);
         judulbuku = view.findViewById(R.id.judul);
         penulis = view.findViewById(R.id.penulis);
         penerbit = view.findViewById(R.id.penerbit);
         tahun = view.findViewById(R.id.tahun);
         harga = view.findViewById(R.id.harga);
+        imageView = view.findViewById(R.id.imageView1);
         addimage = view.findViewById(R.id.addimage);
         send = view.findViewById(R.id.send);
+
         addimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Toast.makeText(getActivity(), "Add Text", Toast.LENGTH_SHORT).show();
                 imageChooser();
+            }
+        });
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (!validatejudul() | !validatepenulis() | !validatepenerbit() | !validatetahun() | !validateharga()) {
+                    Toast.makeText(getActivity(), "Masukkan Data", Toast.LENGTH_SHORT).show();
+                } else { 
+                   sendData(
+                            judulbuku.getText().toString(),
+                            penulis.getText().toString(),
+                            penerbit.getText().toString(),
+                            harga.getText().toString(),
+                            tahun.getText().toString(),
+                            base64Image
+                    );
+                }
             }
         });
 
@@ -98,14 +119,13 @@ public class TambahFragment extends Fragment {
     }
 
 
-
     private String encodeImage(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bm.compress(Bitmap.CompressFormat.JPEG, 60, baos);
         byte[] b = baos.toByteArray();
 
         String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-    return encImage;
+        return encImage;
     }
 
 
@@ -114,6 +134,7 @@ public class TambahFragment extends Fragment {
         Uri uri = data.getData();
         InputStream imageStream;
         String encodeImage = "";
+        imageView.setImageURI(uri);
 
         try {
             imageStream = getContext().getContentResolver().openInputStream(uri);
@@ -126,7 +147,7 @@ public class TambahFragment extends Fragment {
 
     }
 
-    private void sendData (String judul, String penulis, String penerbit, String tahun, String harga) {
+    private void sendData(String judul, String penulis, String penerbit, String tahun, String harga, String base64Image) {
         Book book = new Book();
         book.setHarga(Integer.valueOf(harga));
         book.setJudul(judul);
@@ -137,25 +158,25 @@ public class TambahFragment extends Fragment {
 
         BookApiService apiService = retrofit.create(BookApiService.class);
         Call<LoginResult> result = apiService.insertNewBook(AppService.getToken(), book);
-        result.enqueue(new Callback<LoginResult>()  {
+        result.enqueue(new Callback<LoginResult>() {
 
             @Override
             public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
                 if (response.body().isSuccess()) {
                     Log.e("TAG", "Berhasil Tambah buku baru ");
-                } else
-
-                { Log.e("TAG", "gagal add buku baru "); }
-        }
-                @Override
-                public void onFailure (Call <LoginResult> call, Throwable t){
-               t.printStackTrace();
+                    Toast.makeText(getActivity(),"Add succes",Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("TAG", "gagal add buku baru ");
+                    Toast.makeText(getActivity(),"Add gagal",Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
 
-
-
+            @Override
+            public void onFailure(Call<LoginResult> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 
 
     // TODO: Rename and change types of parameters
@@ -175,4 +196,78 @@ public class TambahFragment extends Fragment {
         return fragment;
     }
 
+    private void initRetrofit() {
+        retrofit = RetrofitUtility.initialieRetrofit();
+    }
+    private boolean validatejudul() {
+
+        String judulinput = judulbuku.getText().toString().trim();
+
+        if (judulinput.isEmpty()) {
+            judulbuku.setError("judul  tidak boleh kosong");
+            return false;
+        } else {
+            judulbuku.setError(null);
+            return true;
+        }
+
+    }
+
+    private boolean validatepenulis() {
+
+        String penulisinput = penulis.getText().toString().trim();
+
+        if (penulisinput.isEmpty()) {
+            penulis.setError("penulis tidak boleh kosong");
+            return false;
+        } else {
+            penulis.setError(null);
+            return true;
+        }
+
+
+    }
+
+    private boolean validatepenerbit() {
+
+        String penerbitinput = penerbit.getText().toString().trim();
+
+        if (penerbitinput.isEmpty()) {
+            penerbit.setError("penerbit tidak boleh kosong");
+            return false;
+        } else {
+            penerbit.setError(null);
+            return true;
+        }
+
+
+    }
+
+    private boolean validatetahun() {
+
+        String tahuninput = tahun.getText().toString().trim();
+
+        if (tahuninput.isEmpty()) {
+            tahun.setError("tahun tidak boleh kosong");
+            return false;
+        } else {
+            tahun.setError(null);
+            return true;
+        }
+
+
+    }
+
+    private boolean validateharga() {
+
+        String hargainput = harga.getText().toString().trim();
+
+        if (hargainput.isEmpty()) {
+            harga.setError("harga tidak boleh kosong");
+            return false;
+        } else {
+            harga.setError(null);
+            return true;
+        }
+    }
 }
