@@ -22,4 +22,27 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
     </FrameLayout>
+    <Button
+        android:id="@+id/home"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@drawable/home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.370"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.993" />
+    <Button
+        android:id="@+id/plus"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:background="@drawable/plus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.993" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
