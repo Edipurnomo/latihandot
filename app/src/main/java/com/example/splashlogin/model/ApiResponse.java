@@ -2,29 +2,26 @@ package com.example.splashlogin.model;
 
 public class ApiResponse {
     private int id;
+    private int harga;
+    private int tahun;
     private String judul;
     private String penerbit;
     private String penulis;
-    private int harga;
-    private int userid;
-    private String tahun;
     private String thumb;
-    private  boolean success;
-    private Record record;
-    private String token;
+    private String message;
+    private boolean success;
 
-    public ApiResponse(int id, String judul, String penerbit, String penulis, int harga, int userid, String tahun, String thumb, boolean success, Record record, String token) {
+
+    public ApiResponse(int id, int harga, int tahun, String judul, String penerbit, String penulis, String thumb, String message, boolean success) {
         this.id = id;
+        this.harga = harga;
+        this.tahun = tahun;
         this.judul = judul;
         this.penerbit = penerbit;
         this.penulis = penulis;
-        this.harga = harga;
-        this.userid = userid;
-        this.tahun = tahun;
         this.thumb = thumb;
+        this.message = message;
         this.success = success;
-        this.record = record;
-        this.token = token;
     }
 
     public int getId() {
@@ -33,6 +30,22 @@ public class ApiResponse {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getHarga() {
+        return harga;
+    }
+
+    public void setHarga(int harga) {
+        this.harga = harga;
+    }
+
+    public int getTahun() {
+        return tahun;
+    }
+
+    public void setTahun(int tahun) {
+        this.tahun = tahun;
     }
 
     public String getJudul() {
@@ -59,30 +72,6 @@ public class ApiResponse {
         this.penulis = penulis;
     }
 
-    public int getHarga() {
-        return harga;
-    }
-
-    public void setHarga(int harga) {
-        this.harga = harga;
-    }
-
-    public int getUserid() {
-        return userid;
-    }
-
-    public void setUserid(int userid) {
-        this.userid = userid;
-    }
-
-    public String getTahun() {
-        return tahun;
-    }
-
-    public void setTahun(String tahun) {
-        this.tahun = tahun;
-    }
-
     public String getThumb() {
         return thumb;
     }
@@ -91,27 +80,19 @@ public class ApiResponse {
         this.thumb = thumb;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public boolean isSuccess() {
         return success;
     }
 
     public void setSuccess(boolean success) {
         this.success = success;
-    }
-
-    public Record getRecord() {
-        return record;
-    }
-
-    public void setRecord(Record record) {
-        this.record = record;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

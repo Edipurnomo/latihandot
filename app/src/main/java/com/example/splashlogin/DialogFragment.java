@@ -107,6 +107,9 @@ public class DialogFragment extends Fragment {
             bookAdapter.setId(books.getId());
             bookAdapter.setJudul(books.getJudul());
             bookAdapter.setPenulis(books.getPenulis());
+            bookAdapter.setPenerbit(books.getPenerbit());
+            bookAdapter.setTahun(String.valueOf(books.getTahun()));
+            bookAdapter.setHarga(String.valueOf(books.getHarga()));
             bookAdapter.setThumb(books.getThumb());
             bookAdapterList.add(bookAdapter);
         }

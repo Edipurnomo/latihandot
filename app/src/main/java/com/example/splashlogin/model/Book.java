@@ -74,4 +74,14 @@ public class Book {
     public void setHarga(int harga) {
         this.harga = harga;
     }
+
+    public Book(int id, String judul, String penerbit, String penulis, String thumb, int tahun, int harga) {
+        this.id = id;
+        this.judul = judul;
+        this.penerbit = penerbit;
+        this.penulis = penulis;
+        this.thumb = thumb;
+        this.tahun = tahun;
+        this.harga = harga;
+    }
 }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,12 +49,12 @@ public class MemberListAdapter  extends RecyclerView.Adapter<MemberListAdapter.M
         memberViewHolder.listbuku.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TextView dialog_judul_tv = myDialog.findViewById(R.id.judulview);
-                TextView dialog_penulis_tv = myDialog.findViewById(R.id.penulisview);
+                EditText dialog_judul_tv = myDialog.findViewById(R.id.judulview);
+                EditText dialog_penulis_tv = myDialog.findViewById(R.id.penulisview);
                ImageView dialog_thumb_img = myDialog.findViewById(R.id.imageView2);
-                TextView dialog_penerbit_tv = myDialog.findViewById(R.id.penerbitviewt);
-                TextView dialog_tahun_tv = myDialog.findViewById(R.id.tahunview);
-                TextView dialog_harga_tv = myDialog.findViewById(R.id.hargaview);
+                EditText dialog_penerbit_tv = myDialog.findViewById(R.id.penerbitviewt);
+                EditText dialog_tahun_tv = myDialog.findViewById(R.id.tahunview);
+                EditText dialog_harga_tv = myDialog.findViewById(R.id.hargaview);
 
                 dialog_judul_tv.setText(bookAdapterList.get(memberViewHolder.getAdapterPosition()).getJudul());
                 dialog_penulis_tv.setText(bookAdapterList.get(memberViewHolder.getAdapterPosition()).getPenulis());

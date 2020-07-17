@@ -41,13 +41,12 @@ public class TambahFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private String mParam1;
-    private String mParam2;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static final int PICK_IMAGE = 1;
     private View view;
-    private String TAG = "TambahFragment";
+    private String TAG = "tambahfragment";
     private EditText judulbuku, penulis, penerbit, tahun, harga;
     private ImageView imageView;
     private String base64Image;
@@ -58,10 +57,7 @@ public class TambahFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -82,7 +78,7 @@ public class TambahFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getActivity(), "Add Text", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Add Image", Toast.LENGTH_SHORT).show();
                 imageChooser();
             }
         });
@@ -109,94 +105,6 @@ public class TambahFragment extends Fragment {
 
         return view;
     }
-
-
-    private void imageChooser() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
-    }
-
-
-    private String encodeImage(Bitmap bm) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 60, baos);
-        byte[] b = baos.toByteArray();
-
-        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
-        return encImage;
-    }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Uri uri = data.getData();
-        InputStream imageStream;
-        String encodeImage = "";
-        imageView.setImageURI(uri);
-
-        try {
-            imageStream = getContext().getContentResolver().openInputStream(uri);
-            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-            encodeImage = encodeImage(selectedImage);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        base64Image = encodeImage;
-
-    }
-
-    private void sendData(String judul, String penulis, String penerbit, String tahun, String harga, String base64Image) {
-        Book book = new Book();
-        book.setHarga(Integer.valueOf(harga));
-        book.setJudul(judul);
-        book.setPenulis(penulis);
-        book.setPenerbit(penerbit);
-        book.setTahun(Integer.valueOf(tahun));
-        book.setThumb(base64Image);
-
-        BookApiService apiService = retrofit.create(BookApiService.class);
-        Call<ApiResponse> result = apiService.insertNewBook(AppService.getToken(), book);
-        result.enqueue(new Callback<ApiResponse>() {
-
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                if (response.body().isSuccess()) {
-                    Log.e("TAG", "Berhasil Tambah buku baru ");
-                    Toast.makeText(getActivity(),"Add succes",Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.e("TAG", "gagal add buku baru ");
-                    Toast.makeText(getActivity(),"Add gagal",Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
-    }
-
-
-    // TODO: Rename and change types of parameters
-
-
-    public TambahFragment() {
-    }
-
-
-    // TODO: Rename and change types and number of parameters
-    public static TambahFragment newInstance(String param1, String param2) {
-        TambahFragment fragment = new TambahFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     private void initRetrofit() {
         retrofit = RetrofitUtility.initialieRetrofit();
     }
@@ -271,4 +179,74 @@ public class TambahFragment extends Fragment {
             return true;
         }
     }
+
+    private void imageChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+    }
+
+
+    private String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 60, baos);
+        byte[] b = baos.toByteArray();
+
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encImage;
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Uri uri = data.getData();
+        InputStream imageStream;
+        String encodeImage = "";
+        imageView.setImageURI(uri);
+
+        try {
+            imageStream = getContext().getContentResolver().openInputStream(uri);
+            Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+            encodeImage = encodeImage(selectedImage);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        base64Image = encodeImage;
+
+    }
+
+    private void sendData(String judul, String penulis, String penerbit, String harga, String tahun, String base64Image) {
+        Book book = new Book();
+        book.setHarga(Integer.valueOf(harga));
+        book.setJudul(judul);
+        book.setPenulis(penulis);
+        book.setPenerbit(penerbit);
+        book.setTahun(Integer.valueOf(tahun));
+        book.setThumb(base64Image);
+
+        BookApiService apiService = retrofit.create(BookApiService.class);
+        Call<ApiResponse> result = apiService.insertNewBook(AppService.getToken(), book);
+        result.enqueue(new Callback<ApiResponse>() {
+
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                if (response.body().isSuccess()) {
+                    Log.e("TAG", "Berhasil Tambah buku baru ");
+                    Toast.makeText(getActivity(),"Add succes",Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("TAG", "gagal add buku baru ");
+                    Toast.makeText(getActivity(),"Add gagal",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+
+                t.printStackTrace();
+            }
+        });
+    }
+
 }
