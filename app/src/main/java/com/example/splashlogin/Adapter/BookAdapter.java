@@ -8,6 +8,9 @@ public class BookAdapter implements Parcelable {
     private String judul;
     private String penulis;
     private String thumb;
+    private String penerbit;
+    private String tahun;
+    private String harga;
     public BookAdapter() {
     }
 
@@ -15,6 +18,9 @@ public class BookAdapter implements Parcelable {
         id = in.readInt();
         judul = in.readString();
         penulis = in.readString();
+        penerbit= in.readString();
+        tahun= in.readString();
+        harga= in.readString();
         thumb = in.readString();
     }
     public static final Creator CREATOR = new Creator() {
@@ -36,6 +42,9 @@ public class BookAdapter implements Parcelable {
         dest.writeInt(id);
         dest.writeString(judul);
         dest.writeString(penulis);
+        dest.writeString(penerbit);
+        dest.writeString(tahun);
+        dest.writeString(harga);
         dest.writeString(thumb);
     }
 //common setter and getter
@@ -70,6 +79,30 @@ public class BookAdapter implements Parcelable {
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public String getPenerbit() {
+        return penerbit;
+    }
+
+    public void setPenerbit(String penerbit) {
+        this.penerbit = penerbit;
+    }
+
+    public String getTahun() {
+        return tahun;
+    }
+
+    public void setTahun(String tahun) {
+        this.tahun = tahun;
+    }
+
+    public String getHarga() {
+        return harga;
+    }
+
+    public void setHarga(String harga) {
+        this.harga = harga;
     }
 
     public static Creator getCREATOR() {

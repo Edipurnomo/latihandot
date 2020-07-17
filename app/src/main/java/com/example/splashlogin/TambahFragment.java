@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 
 import com.example.splashlogin.API.BookApiService;
+import com.example.splashlogin.model.ApiResponse;
 import com.example.splashlogin.model.Book;
 import com.example.splashlogin.model.LoginResult;
 import com.example.splashlogin.rest.AppService;
@@ -68,8 +69,8 @@ public class TambahFragment extends Fragment {
                              Bundle savedInstanceState) {
         initRetrofit();
         view = inflater.inflate(R.layout.fragment_tambah, container, false);
-        judulbuku = view.findViewById(R.id.judul);
-        penulis = view.findViewById(R.id.penulis);
+        judulbuku = view.findViewById(R.id.juduladd);
+        penulis = view.findViewById(R.id.penulisadd);
         penerbit = view.findViewById(R.id.penerbit);
         tahun = view.findViewById(R.id.tahun);
         harga = view.findViewById(R.id.harga);
@@ -92,7 +93,7 @@ public class TambahFragment extends Fragment {
 
                 if (!validatejudul() | !validatepenulis() | !validatepenerbit() | !validatetahun() | !validateharga()) {
                     Toast.makeText(getActivity(), "Masukkan Data", Toast.LENGTH_SHORT).show();
-                } else { 
+                } else {
                    sendData(
                             judulbuku.getText().toString(),
                             penulis.getText().toString(),
@@ -157,11 +158,11 @@ public class TambahFragment extends Fragment {
         book.setThumb(base64Image);
 
         BookApiService apiService = retrofit.create(BookApiService.class);
-        Call<LoginResult> result = apiService.insertNewBook(AppService.getToken(), book);
-        result.enqueue(new Callback<LoginResult>() {
+        Call<ApiResponse> result = apiService.insertNewBook(AppService.getToken(), book);
+        result.enqueue(new Callback<ApiResponse>() {
 
             @Override
-            public void onResponse(Call<LoginResult> call, Response<LoginResult> response) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 if (response.body().isSuccess()) {
                     Log.e("TAG", "Berhasil Tambah buku baru ");
                     Toast.makeText(getActivity(),"Add succes",Toast.LENGTH_SHORT).show();
@@ -172,7 +173,7 @@ public class TambahFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<LoginResult> call, Throwable t) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 t.printStackTrace();
             }
         });
