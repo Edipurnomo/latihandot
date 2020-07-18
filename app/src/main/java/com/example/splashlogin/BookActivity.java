@@ -1,16 +1,24 @@
 package com.example.splashlogin;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public class BookActivity extends AppCompatActivity {
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+public class BookActivity extends AppCompatActivity {
+    private BottomNavigationView btmNavigation;
+    private String TAG = "bookactivity";
+    private TextView textJudul;
     Button home;
     Button plus;
 
@@ -38,7 +46,11 @@ public class BookActivity extends AppCompatActivity {
         });
 
         }
-    private void openHomeFragment() {
+
+
+
+
+    public void openHomeFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
@@ -48,12 +60,21 @@ public class BookActivity extends AppCompatActivity {
     }
 
 
-    private void tambahFragment() {
+    public void tambahFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
         TambahFragment strCode = new TambahFragment();
         fragmentTransaction.replace(R.id.content, strCode, "TambahFragment");
+        fragmentTransaction.commit();
+    }
+
+
+    public void openViewFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        DialogFragment bookView = new DialogFragment();
+        fragmentTransaction.replace(R.id.content, bookView, "book fragment");
         fragmentTransaction.commit();
     }
 

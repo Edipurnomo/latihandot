@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.splashlogin.Adapter.BookAdapter;
 import com.example.splashlogin.Adapter.MemberListAdapter;
 import com.example.splashlogin.model.Book;
 import com.example.splashlogin.rest.AppService;
+import com.example.splashlogin.rest.DialogUtility;
 import com.example.splashlogin.rest.RetrofitUtility;
 
 import java.util.ArrayList;
@@ -61,24 +63,33 @@ public class HomeFragment extends Fragment {
     private void initRecyclerView() {
         listMember = view.findViewById(R.id.listMember);
         linearLayoutManager = new LinearLayoutManager(context);
-        memberListAdapter = new MemberListAdapter();
+        memberListAdapter = new MemberListAdapter(context, this);
         listMember.setLayoutManager(linearLayoutManager);
         listMember.setAdapter(memberListAdapter);
     }
     private void initRetrofit() {
         retrofit = RetrofitUtility.initialieRetrofit();
     }
+
     private void getAllBookData() {
+        DialogUtility.showDialog(R.raw.plane, "Loading : Get Data Buku", getContext());
         BookApiService apiService = retrofit.create(BookApiService.class);
         Call<List<Book>> result = apiService.getAllBuku(AppService.getToken());
         result.enqueue(new Callback<List<Book>>() {
             @Override
-            public void onResponse(Call<List<com.example.splashlogin.model.Book>> call, Response<List<Book>> response) {
-                addData(response.body());
+            public void onResponse(Call<List<com.example.splashlogin.model.Book>> call, Response<List<com.example.splashlogin.model.Book>> response) {
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    DialogUtility.closeAllDialog();
+                    addData(response.body());
+                }, 1000);
             }
+
             @Override
             public void onFailure(Call<List<com.example.splashlogin.model.Book>> call, Throwable t) {
                 t.printStackTrace();
+                DialogUtility.closeAllDialog();
+                DialogUtility.showCustomDialog(R.raw.error, "Error : " + t.getMessage(), getContext());
             }
         });
     }
@@ -100,23 +111,7 @@ public class HomeFragment extends Fragment {
         memberListAdapter.addAll(bookAdapterList);
     }
 
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public void openFragmentView(int id) {
+        ((BookActivity)getActivity()).openViewFragment();
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-
 }

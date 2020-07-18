@@ -1,222 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/panda">
+    android:layout_gravity="left|top"
+    tools:context=".DialogFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/openbook"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="450dp"
+        android:layout_height="750dp"
+        android:layout_gravity="left"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.200" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FROM Edit"
-        android:fontFamily="@font/bilbo_swash_caps"
-        android:textStyle="bold"
-        android:textSize="25dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.280" />
+        <LinearLayout
+            android:layout_width="374dp"
+            android:layout_height="563dp"
+            android:layout_gravity="left|top"
+            android:orientation="vertical">
 
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/animation"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true" />
 
-    <FrameLayout
-        android:layout_width="374dp"
-        android:layout_height="563dp"
-        android:layout_marginTop="120dp"
-        android:background="#95B0E0E6"
-        android:elevation="20dp"
-        android:layout_marginLeft="10dp"
-        android:outlineAmbientShadowColor="@color/Blue"
-        android:outlineSpotShadowColor="#3F51B5"
-        android:padding="30dp">
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Silahkan isi"
-            android:fontFamily="@font/bilbo_swash_caps"
-            android:textStyle="bold"
-            android:textSize="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.280" />
-        <EditText
-            android:id="@+id/judulview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:height="30dp"
-            android:background="@drawable/border1"
-            android:ems="10"
-            android:hint="Judul Buku"
-            android:inputType="textEmailSubject"
-            android:paddingLeft="20dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:textColor="#272424"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.455" />
-
-        <EditText
-            android:id="@+id/penulisview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:height="30dp"
-            android:background="@drawable/border1"
-            android:ems="10"
-            android:hint="Penulis"
-            android:inputType="textEmailSubject"
-            android:paddingLeft="20dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:textColor="#272424"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.455" />
-
-        <EditText
-            android:id="@+id/penerbitviewt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="150dp"
-            android:height="30dp"
-            android:background="@drawable/border1"
-            android:ems="10"
-            android:hint="Penerbit"
-            android:inputType="textEmailSubject"
-            android:paddingLeft="20dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:textColor="#272424"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.455" />
-
-        <EditText
-            android:id="@+id/tahunview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="200dp"
-            android:height="30dp"
-            android:background="@drawable/border1"
-            android:ems="10"
-            android:hint="Tahun"
-            android:inputType="textEmailSubject"
-            android:paddingLeft="20dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:textColor="#272424"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.455" />
-
-        <EditText
-            android:id="@+id/hargaview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="250dp"
-            android:height="30dp"
-            android:background="@drawable/border1"
-            android:ems="10"
-            android:hint="Harga"
-            android:inputType="textEmailSubject"
-            android:paddingLeft="20dp"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:textColor="#272424"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.487"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.455" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="144dp"
-            android:layout_height="131dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="290dp"
-            android:src="@drawable/picturefolder"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.200" />
-
-        <Button
-            android:id="@+id/buttonedit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Edit"
-            android:theme="@style/buttonstyle1"
-            android:layout_marginTop="415dp"
-            android:layout_marginLeft="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.600"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title1"
-            app:layout_constraintVertical_bias="0.515" />
-
-        <Button
-            android:id="@+id/viewbutton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="delete"
-            android:theme="@style/buttonstyle2"
-            android:layout_marginTop="410dp"
-            android:layout_marginLeft="220dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.600"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title2"
-            app:layout_constraintVertical_bias="0.515" />
-
-    </FrameLayout>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="100dp"
+                app:cardElevation="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.495"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/animation">
 
 
-</FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="Books Detail"
+                        android:textColor="@color/grey800"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/imageThumb"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:foregroundGravity="center_horizontal"
+                        android:src="@drawable/ic_image" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUpload"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:text="Upload"
+                        android:visibility="gone"
+                        app:backgroundTint="@color/blue700"
+                        app:icon="@drawable/ic_upload"
+                        app:iconSize="15dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:background="@android:color/transparent"
+                        android:elevation="20dp"
+                        android:textColorHint="@color/grey800"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:boxStrokeColor="@color/grey800"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/grey500">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputJudul"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:enabled="false"
+                            android:hint="Judul Buku"
+                            android:inputType="text" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:background="@android:color/transparent"
+                        android:elevation="20dp"
+                        android:textColorHint="@color/grey800"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:boxStrokeColor="@color/grey800"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/grey500"
+                        tools:layout_editor_absoluteX="40dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputPenulis"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:enabled="false"
+                            android:hint="Penulis"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:background="@android:color/transparent"
+                        android:elevation="20dp"
+                        android:textColorHint="@color/grey800"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:boxStrokeColor="@color/grey800"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/grey500"
+                        tools:layout_editor_absoluteX="40dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputPenerbit"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:enabled="false"
+                            android:hint="Penerbit"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:background="@android:color/transparent"
+                        android:elevation="20dp"
+                        android:textColorHint="@color/grey800"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:boxStrokeColor="@color/grey800"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/grey500"
+                        tools:layout_editor_absoluteX="40dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputTahun"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:enabled="false"
+                            android:hint="Tahun"
+                            android:inputType="number"
+                            android:maxLength="4" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="58dp"
+                        android:background="@android:color/transparent"
+                        android:elevation="20dp"
+                        android:textColorHint="@color/grey800"
+                        app:boxBackgroundColor="@android:color/transparent"
+                        app:boxStrokeColor="@color/grey800"
+                        app:errorEnabled="true"
+                        app:hintTextColor="@color/grey500"
+                        tools:layout_editor_absoluteX="40dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/inputHarga"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:enabled="false"
+                            android:hint="Harga"
+                            android:inputType="number"
+                            android:maxLength="7" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutAction"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnUpdate"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text="Update"
+                            app:backgroundTint="@color/blue700"
+                            app:icon="@drawable/ic_pencil_alt"
+                            app:iconSize="15dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDelete"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text="Delete"
+                            app:backgroundTint="@color/red900"
+                            app:icon="@drawable/ic_trash_alt"
+                            app:iconSize="15dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layoutUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSave"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text="Save"
+                            app:backgroundTint="@color/blue700"
+                            app:icon="@drawable/ic_save"
+                            app:iconSize="15dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCancel"
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:layout_weight="1"
+                            android:text="Cancel"
+                            app:backgroundTint="@color/red900"
+                            app:icon="@drawable/ic_times"
+                            app:iconSize="15dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

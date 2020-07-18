@@ -1,15 +1,22 @@
 package com.example.splashlogin;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -17,13 +24,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.splashlogin.API.BookApiService;
 import com.example.splashlogin.Adapter.BookAdapter;
 import com.example.splashlogin.Adapter.MemberListAdapter;
+import com.example.splashlogin.model.ApiResponse;
 import com.example.splashlogin.model.Book;
+import com.example.splashlogin.model.BookResult;
 import com.example.splashlogin.rest.AppService;
+import com.example.splashlogin.rest.DialogUtility;
 import com.example.splashlogin.rest.RetrofitUtility;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,143 +49,330 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class DialogFragment extends Fragment {
-    private CardView item_buku;
-    ImageView bookThumb;
-    TextView judul;
-    TextView penulis;
-    TextView penerbit;
-    TextView tahun;
-    TextView harga;
-
-    private String TAG = "DialogFragment";
-
-    private RecyclerView listMember;
-    private LinearLayoutManager linearLayoutManager;
-    private MemberListAdapter memberListAdapter;
-    protected Context context;
-
-    Button dialogdelete, dialogedit;
-
-    Uri uri;
 
     private View view;
     private Retrofit retrofit;
-    private String base64Image = "";
-    private int id;
+    private String TAG = "viewfragment";
 
+    private ImageView imageThumb;
+    private TextInputEditText inputJudul, inputPenerbit, inputTahun, inputPenulis, inputHarga;
+    private MaterialButton btnUpdate, btnDelete, btnSave, btnCancel, btnUpload;
+    private LottieAnimationView animationView;
+    private AlertDialog dlg;
+    private LinearLayout layoutAction, layoutUpdate;
+    public static final int PICK_IMAGE = 1;
+    private String base64Image = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_dialog, container, false);
 
-//        MemberListAdapter adapter = new MemberListAdapter(this);
+        getData();
+        initView();
 
-        View view = inflater.inflate(R.layout.fragment_dialog, container, false);
-
-        item_buku = view.findViewById(R.id.list_buku);
-        bookThumb = view.findViewById(R.id.thumb);
-        judul = view.findViewById(R.id.judulview);
-        penulis = view.findViewById(R.id.penulisview);
-        penerbit = view.findViewById(R.id.penerbitviewt);
-        tahun = view.findViewById(R.id.tahunview);
-        harga = view.findViewById(R.id.hargaview);
-
-        initRetrofit();
         return view;
-
     }
 
-    private void initRetrofit() {
-        listMember = view.findViewById(R.id.listMember);
-        linearLayoutManager = new LinearLayoutManager(context);
-        memberListAdapter = new MemberListAdapter();
-        listMember.setLayoutManager(linearLayoutManager);
-        listMember.setAdapter(memberListAdapter);
+    private void initView() {
+        inputJudul = view.findViewById(R.id.inputJudul);
+        inputPenerbit = view.findViewById(R.id.inputPenerbit);
+        inputTahun = view.findViewById(R.id.inputTahun);
+        inputPenulis = view.findViewById(R.id.inputPenulis);
+        inputHarga = view.findViewById(R.id.inputHarga);
+        imageThumb = view.findViewById(R.id.imageThumb);
+        animationView = view.findViewById(R.id.animation);
 
-        retrofit =RetrofitUtility.initialieRetrofit();
-    }
+        btnDelete = view.findViewById(R.id.btnDelete);
+        btnUpdate = view.findViewById(R.id.btnUpdate);
+        btnCancel = view.findViewById(R.id.btnCancel);
+        btnSave = view.findViewById(R.id.btnSave);
+        btnUpload = view.findViewById(R.id.btnUpload);
 
-    private void addData(List<Book> data) {
-        List<BookAdapter> bookAdapterList = new ArrayList<>();
-        BookAdapter bookAdapter;
+        layoutAction = view.findViewById(R.id.layoutAction);
+        layoutUpdate = view.findViewById(R.id.layoutUpdate);
 
+        animationView.setAnimation(R.raw.books);
 
-        for (Book books : data) {
-            Log.e(TAG, "addData: "+ books.getJudul() );
-            bookAdapter = new BookAdapter();
-            bookAdapter.setId(books.getId());
-            bookAdapter.setJudul(books.getJudul());
-            bookAdapter.setPenulis(books.getPenulis());
-            bookAdapter.setPenerbit(books.getPenerbit());
-            bookAdapter.setTahun(String.valueOf(books.getTahun()));
-            bookAdapter.setHarga(String.valueOf(books.getHarga()));
-            bookAdapter.setThumb(books.getThumb());
-            bookAdapterList.add(bookAdapter);
-        }
-
-        memberListAdapter.addAll(bookAdapterList);
-    }
-
-    private void getAllBookData() {
-        BookApiService apiservice = retrofit.create(BookApiService.class);
-        Call<List<com.example.splashlogin.model.Book>> result = apiservice.getAllBuku(AppService.getToken());
-        result.enqueue(new Callback<List<com.example.splashlogin.model.Book>>() {
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<List<com.example.splashlogin.model.Book>> call, Response<List<com.example.splashlogin.model.Book>> response) {
-                addData(response.body());
+            public void onClick(View view) {
+                setFormDisable(true);
+                layoutUpdate.setVisibility(View.VISIBLE);
+                layoutAction.setVisibility(View.GONE);
+                btnUpload.setVisibility(View.VISIBLE);
+            }
+
+        });
+
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shoConfirmDialog(R.raw.delete, "Delete Data Buku Ini..?", getContext());
+            }
+
+
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Log.e(TAG, "save ");
+                sendData(inputJudul.getText().toString(), inputPenulis.getText().toString(), inputPenerbit.getText().toString(), inputTahun.getText().toString(), inputHarga.getText().toString());
+            }
+
+
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                setFormDisable(false);
+                layoutUpdate.setVisibility(View.GONE);
+                layoutAction.setVisibility(View.VISIBLE);
+                btnUpload.setVisibility(View.GONE);
+            }
+
+
+        });
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            }
+
+
+        });
+    }
+
+    private void getData() {
+
+        DialogUtility.showDialog(R.raw.plane, "Loading : Get Data Buku", getContext());
+        retrofit = RetrofitUtility.initialieRetrofit();
+
+        BookApiService apiService = retrofit.create(BookApiService.class);
+        Call<BookResult> result = apiService.getBookById(AppService.getToken(), String.valueOf(AppService.getIdbuku()));
+        result.enqueue(new Callback<BookResult>() {
+            @Override
+            public void onResponse(Call<BookResult> call, Response<BookResult> response) {
+
+                DialogUtility.closeAllDialog();
+                if (response.body().getSuccess()) {
+
+                    String judul = response.body().getRecord().getJudul() != null ? response.body().getRecord().getJudul() : "";
+                    String penulis = response.body().getRecord().getPenulis() != null ? response.body().getRecord().getPenulis() : "";
+                    String penerbit = response.body().getRecord().getPenerbit() != null ? response.body().getRecord().getPenerbit() : "";
+                    String tahun = response.body().getRecord().getTahun() != null ? response.body().getRecord().getTahun() : "";
+                    String harga = response.body().getRecord().getHarga() > 0 ? String.valueOf(response.body().getRecord().getHarga()) : "";
+
+                    Log.e(TAG, "judul: " + judul);
+                    Log.e(TAG, "penulis: " + penulis);
+                    Log.e(TAG, "penerbit: " + penerbit);
+                    Log.e(TAG, "tahun: " + tahun);
+                    Log.e(TAG, "harga: " + harga);
+
+                    inputJudul.setText(judul);
+                    inputPenulis.setText(penulis);
+                    inputPenerbit.setText(penerbit);
+                    inputTahun.setText(tahun);
+                    inputHarga.setText(harga);
+
+                    setImageThumb(response.body().getRecord().getThumb());
+                } else {
+                    DialogUtility.showCustomDialog(R.raw.error, "Error : " + response.body().getMessage(), getContext());
+                }
             }
 
             @Override
-            public void onFailure(Call<List<com.example.splashlogin.model.Book>> call, Throwable t) {
+            public void onFailure(Call<BookResult> call, Throwable t) {
                 t.printStackTrace();
+                DialogUtility.closeAllDialog();
+                DialogUtility.showCustomDialog(R.raw.error, "Error : " + t.getMessage(), getContext());
             }
         });
     }
 
-//    public void viewData(String thumb, String judul, String penulis, String penerbit, String tahun, String harga) {
-//        Book book = new Book();
-//        book.setId(id);
-//        book.setHarga(Integer.valueOf(harga));
-//        book.setJudul(judul);
-//        book.setPenulis(penulis);
-//        book.setPenerbit(penerbit);
-//        book.setTahun(tahun);
-//        book.setThumb(base64Image);
-//
-//        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
-//        Call<BookResult> result = apiInterface.getBookById(AppService.getToken(), id);
-//        result.enqueue(new Callback<BookResult>() {
-//            @Override
-//            public void onResponse(Call<BookResult> call, Response<BookResult> response) {
-//
-//                if (response.body().isSuccess()) {
-//                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                    Fragment fragment = getFragmentManager().findFragmentByTag("id");
-//                    if (fragment != null) {
-//                        ft.remove(fragment);
-//                    }
-//                    ft.addToBackStack(null);
-//                    Log.e("TAG", "Fetch Success");
-//                } else {
-//                    Log.e("TAG", "Fetch Gagal" + response.body().toString());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onFailure(Call<BookResult> call, Throwable t) {
-//                t.printStackTrace();
-//
-//            }
-//        });
-//
-//    }
+    private void setFormDisable(boolean value) {
+        inputJudul.setEnabled(value);
+        inputTahun.setEnabled(value);
+        inputHarga.setEnabled(value);
+        inputPenerbit.setEnabled(value);
+        inputPenulis.setEnabled(value);
+    }
+
+    private Bitmap setImageThumb(String base64String) {
+        byte[] decodedString = Base64.decode(base64String, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        imageThumb.setImageBitmap(decodedByte);
+        return decodedByte;
+    }
+
+    public void shoConfirmDialog(int id, String message, Context context) {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View viewDialog = factory.inflate(R.layout.dialog_confirmation_custom, null);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        dlg = alertDialog.create();
+
+        TextView txtPromptMessage = viewDialog.findViewById(R.id.txtPromptMessage);
+        MaterialButton btnPromptOk = viewDialog.findViewById(R.id.btnPromptOk);
+        MaterialButton btnCancel = viewDialog.findViewById(R.id.btnCancel);
+        LottieAnimationView lottieAnimationView = viewDialog.findViewById(R.id.animation_view);
+
+        lottieAnimationView.setAnimation(id);
+        txtPromptMessage.setText(message);
+
+        btnPromptOk.setOnClickListener(view1 -> {
+            Log.e("TAG", "delete");
+            deleteBuku();
+            dlg.dismiss();
+        });
+
+        btnCancel.setOnClickListener(view1 -> {
+            Log.e("TAG", "cancel: ");
+            dlg.dismiss();
+        });
+
+        dlg.setView(viewDialog);
+        dlg.setCanceledOnTouchOutside(false);
+        dlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dlg.show();
+
+    }
+
+    private void deleteBuku() {
+        BookApiService apiService = retrofit.create(BookApiService.class);
+        Call<ApiResponse> result = apiService.deleteBook(AppService.getToken(), String.valueOf(AppService.getIdbuku()));
+        result.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                Log.e(TAG, "onResponse: " + response.body().toString());
+                dlg.dismiss();
+
+                if (response.body().isSuccess()) {
+                    showConfirmResult(R.raw.success, "Success Delete Data", getContext());
+                    layoutUpdate.setVisibility(View.GONE);
+                    layoutAction.setVisibility(View.VISIBLE);
+                    btnUpload.setVisibility(View.GONE);
+                } else {
+                    DialogUtility.showCustomDialog(R.raw.error, "Error :" + response.body().getMessage(), getContext());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                t.printStackTrace();
+                DialogUtility.closeAllDialog();
+                DialogUtility.showCustomDialog(R.raw.error, "Error : " + t.getMessage(), getContext());
+            }
+        });
+    }
+
+    public void showConfirmResult(int id, String message, Context context) {
+        LayoutInflater factory = LayoutInflater.from(context);
+        final View viewDialog = factory.inflate(R.layout.dialog_custom, null);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        dlg = alertDialog.create();
+
+        TextView txtPromptMessage = viewDialog.findViewById(R.id.txtPromptMessage);
+        Button btnPromptOk = viewDialog.findViewById(R.id.btnPromptOk);
+        LottieAnimationView lottieAnimationView = viewDialog.findViewById(R.id.animation_view);
+
+        lottieAnimationView.setAnimation(id);
+        txtPromptMessage.setText(message);
+
+        btnPromptOk.setOnClickListener(view1 -> {
+            ((BookActivity) getActivity()).openHomeFragment();
+            dlg.dismiss();
+        });
+
+        dlg.setView(viewDialog);
+        dlg.setCanceledOnTouchOutside(false);
+        dlg.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dlg.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PICK_IMAGE) {
+            Uri uri = data.getData();
+            imageThumb.setImageURI(uri);
+            InputStream imageStream;
+            String encodedImage = "";
+
+            imageThumb.getLayoutParams().height = 400;
+            imageThumb.getLayoutParams().width = 300;
+
+            try {
+                imageStream = getContext().getContentResolver().openInputStream(uri);
+                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                encodedImage = encodedImage + encodeImage(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            base64Image = encodedImage;
+        }
+    }
+
+    private String encodeImage(Bitmap bm) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String encImage = Base64.encodeToString(b, Base64.DEFAULT);
+        return encImage;
+    }
+
+    private void sendData(String judul, String penulis, String penerbit, String tahun, String harga) {
+
+        DialogUtility.showDialog(R.raw.paperplane, "Loading", getContext());
+
+        Book book = new Book();
+        book.setHarga(Integer.valueOf(harga));
+        book.setId(String.valueOf(AppService.getIdbuku()));
+        book.setJudul(judul);
+        book.setPenulis(penulis);
+        book.setPenerbit(penerbit);
+        book.setTahun(tahun);
+        book.setThumb(base64Image);
+
+        Log.e(TAG, "sendData: " + book.toString());
+
+        BookApiService apiService = retrofit.create(BookApiService.class);
+        Call<ApiResponse> result = apiService.updateBook(AppService.getToken(), book);
+        result.enqueue(new Callback<ApiResponse>() {
+            @Override
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+
+                Log.e(TAG, "onResponse: " + response.body().toString());
+
+                DialogUtility.closeAllDialog();
+
+                if (response.body().isSuccess()) {
+                    showConfirmResult(R.raw.success, "Success Edit Data", getContext());
+                } else {
+                    DialogUtility.showCustomDialog(R.raw.error, "Error :" + response.body().getMessage(), getContext());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
+                t.printStackTrace();
+                DialogUtility.closeAllDialog();
+                DialogUtility.showCustomDialog(R.raw.error, "Error : " + t.getMessage(), getContext());
+            }
+        });
+    }
+
 
 }

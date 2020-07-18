@@ -1,26 +1,34 @@
 <resources>
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="buttonstyle1" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@color/Gold</item>
-        <item name="colorButtonNormal">@color/Chartreuse</item>
-    </style>
+<!--    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--    </style>-->
 
-    <style name="buttonstyle3" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@color/White</item>
-        <item name="colorButtonNormal">@color/colorAccent</item>
+<!--    <style name="buttonstyle1" parent="Theme.AppCompat.Light">-->
+<!--        <item name="colorControlHighlight">@color/Gold</item>-->
+<!--        <item name="colorButtonNormal">@color/Chartreuse</item>-->
+<!--    </style>-->
 
-    </style>
+<!--    <style name="buttonstyle3" parent="Theme.AppCompat.Light">-->
+<!--        <item name="colorControlHighlight">@color/White</item>-->
+<!--        <item name="colorButtonNormal">@color/colorAccent</item>-->
 
-    <style name="buttonstyle2" parent="Theme.AppCompat.Light">
-        <item name="colorControlHighlight">@color/Snow</item>
-        <item name="colorButtonNormal">@color/DeepPink</item>
+<!--    </style>-->
 
-    </style>
+<!--    <style name="buttonstyle2" parent="Theme.AppCompat.Light">-->
+<!--        <item name="colorControlHighlight">@color/Snow</item>-->
+<!--        <item name="colorButtonNormal">@color/DeepPink</item>-->
+
+<!--    </style>-->
 </resources>

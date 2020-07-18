@@ -1,30 +1,16 @@
 package com.example.splashlogin.model;
 
 public class BookResult {
-    private boolean success;
-    private Record record;
+    private Boolean success;
     private String message;
+    private Book record;
 
-    public BookResult(boolean success, Record record, String message) {
-        this.success = success;
-        this.record = record;
-        this.message = message;
-    }
-
-    public boolean isSuccess() {
+    public Boolean getSuccess() {
         return success;
     }
 
-    public void setSuccess(boolean success) {
+    public void setSuccess(Boolean success) {
         this.success = success;
-    }
-
-    public Record getRecord() {
-        return record;
-    }
-
-    public void setRecord(Record record) {
-        this.record = record;
     }
 
     public String getMessage() {
@@ -33,5 +19,22 @@ public class BookResult {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Book getRecord() {
+        return record;
+    }
+
+    public void setRecord(Book record) {
+        this.record = record;
+    }
+
+    @Override
+    public String toString() {
+        return "BookResult{" +
+                "success=" + success +
+                ", message='" + message + '\'' +
+                ", record=" + record +
+                '}';
     }
 }

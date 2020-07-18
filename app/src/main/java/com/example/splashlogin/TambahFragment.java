@@ -223,7 +223,7 @@ public class TambahFragment extends Fragment {
         book.setJudul(judul);
         book.setPenulis(penulis);
         book.setPenerbit(penerbit);
-        book.setTahun(Integer.valueOf(tahun));
+        book.setTahun(tahun);
         book.setThumb(base64Image);
 
         BookApiService apiService = retrofit.create(BookApiService.class);

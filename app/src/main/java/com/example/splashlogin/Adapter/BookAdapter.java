@@ -108,4 +108,7 @@ public class BookAdapter implements Parcelable {
     public static Creator getCREATOR() {
         return CREATOR;
     }
+
+    public void setId(String id) {
+    }
 }
